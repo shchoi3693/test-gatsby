@@ -12,7 +12,7 @@ module.exports = {
     title: `Gatsby Test Site`,
     description: `블로그 입니다.`,
     author: `@Mee`,
-    siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
+    siteUrl: `https://shchoi3693.github.io/test-gatsby/`,
   },
   plugins: [
     {
@@ -92,7 +92,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-canonical-urls`,
       options: {
-        siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
+        siteUrl: `https://shchoi3693.github.io/test-gatsby/`,
         stripQueryString: true,
       },
     },
