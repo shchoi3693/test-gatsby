@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://shchoi3693.github.io/sitemap-index.xml
+Host: https://shchoi3693.github.io
