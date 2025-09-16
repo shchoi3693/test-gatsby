@@ -10,7 +10,7 @@ type PostHeadProps = PostHeadInfoProps & {
 const PostHeadWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 300px;
+  height: 320px;
   flex-shrink: 0;
 `
 
@@ -33,7 +33,7 @@ const PostHeadWrapper = styled.div`
 const BackgroundImage = styled(GatsbyImage)`
   position: absolute;
   width: 100%;
-  height: 300px;
+  height: 320px;
   object-fit: cover;
   filter: brightness(0.25);
   z-index: -1;

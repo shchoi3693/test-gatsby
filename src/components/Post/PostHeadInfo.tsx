@@ -15,24 +15,23 @@ const PostHeadInfoWrapper = styled.div`
   width: 768px;
   height: 100%;
   margin: 0 auto;
-  padding: 60px 0;
+  padding: 3rem 0;
   color: #fff;
   box-sizing: border-box;
 `
 const PrevPageIcon = styled.div`
-  display: grid;
-  place-items: center;
-  width: 40px;
+  display: flex;
+  align-items: center;
   height: 40px;
-  border-radius: 50%;
-  background: #fff;
-  color: #000;
-  font-size: 22px;
+  color: #fff;
+  font-size: 16px;
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+`
+const PrevPageTxt = styled.div`
+  margin-left: 12px;
 `
 
-const Title = styled.div`
+const Title = styled.h1`
   display: -webkit-box;
   overflow: hidden;
   overflow-wrap: break-word;
@@ -43,6 +42,7 @@ const Title = styled.div`
   -webkit-box-orient: vertical;
   font-size: 42px;
   font-weight: 500;
+  line-height: 1.5;
 `
 const PostData = styled.div`
   display: flex;
@@ -63,6 +63,7 @@ const PostHeadInfo: FunctionComponent<PostHeadInfoProps> = ({
     <PostHeadInfoWrapper>
       <PrevPageIcon onClick={goBackPage}>
         <FontAwesomeIcon icon={faArrowLeft} />
+        <PrevPageTxt>All Posts</PrevPageTxt>
       </PrevPageIcon>
       <Title>{title}</Title>
       <PostData>

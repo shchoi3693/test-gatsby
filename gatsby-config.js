@@ -24,7 +24,6 @@ module.exports = {
       },
     },
     `gatsby-plugin-emotion`,
-    //helmet?
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -63,6 +62,13 @@ module.exports = {
             resolve: `gatsby-remark-smartypants`,
             options: {
               dashes: `oldschool`,
+            },
+          },
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              className: `link-headers`,
+              elements: [`h2`],
             },
           },
           {
