@@ -7,6 +7,14 @@
 /**
  * @type {import('gatsby').GatsbySSR['onRenderBody']}
  */
-exports.onRenderBody = ({ setHtmlAttributes }) => {
+const { gtmNoscript, gtmScript } = require('./src/components/Common/gtm-tag')
+
+exports.onRenderBody = ({
+  setHtmlAttributes,
+  setHeadComponents,
+  setPreBodyComponents,
+}) => {
   setHtmlAttributes({ lang: `en` })
+  setHeadComponents([gtmScript])
+  setPreBodyComponents([gtmNoscript])
 }
