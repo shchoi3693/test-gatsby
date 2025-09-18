@@ -29,7 +29,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `contents`,
-        path: `${__dirname}/src/contents`,
+        path: `${__dirname}/contents`,
       },
     },
     {
@@ -71,6 +71,7 @@ module.exports = {
               elements: [`h2`],
             },
           },
+          `gatsby-remark-code-titles`,
           {
             resolve: `gatsby-remark-prismjs`,
             options: {

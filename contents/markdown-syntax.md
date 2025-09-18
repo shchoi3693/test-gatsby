@@ -8,7 +8,7 @@ thumbnail: './img1.jpg'
 
 ## Markdown
 
-> 복잡한 Markup 태그 문법을 글 작성에 집중할 수 있도록 경량화한 언어  
+> 복잡한 MarkUp 태그 문법을 글 작성에 집중할 수 있도록 경량화한 언어  
 > Markdown syntax 는 HTML 태그로 변환되어 출력
 
 ### 장점

@@ -16,11 +16,11 @@ const MarkdownRenderer = styled.div`
 
   h2 {
     font-weight: 600;
-    margin-bottom: 26px;
+    margin-bottom: 1.625rem;
   }
   h3 {
     font-weight: 600;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
   * + h2 {
     margin-top: 7.5rem;
@@ -66,6 +66,7 @@ const MarkdownRenderer = styled.div`
   }
 
   table {
+    margin: 1rem 0;
     border-collapse: collapse;
     border: 1px solid #ebeef7;
   }
@@ -126,14 +127,33 @@ const MarkdownRenderer = styled.div`
   .gatsby-highlight[data-language='html']:after {
     content: 'HTML';
   }
+  .gatsby-highlight[data-language='tsx']:after {
+    content: 'tsx';
+  }
   .gatsby-highlight[data-language='css']:after {
     content: 'CSS';
   }
   .gatsby-highlight[data-language='javascript']:after {
     content: 'Javscript';
   }
-  .gatsby-highlight[data-language='bash']:after {
-    content: 'bash';
+  .gatsby-highlight[data-language='js']:after {
+    content: 'JS';
+  }
+  .gatsby-highlight[data-language='json']:after {
+    content: 'JSON';
+  }
+
+  .gatsby-code-title {
+    margin-bottom: -0.6rem;
+    padding: 0.5em 1rem;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    background-color: #2d2d2d;
+    border-bottom: 6px solid #222;
+    color: #ccc;
+    z-index: 0;
+    font-size: 13px;
+    border-top-left-radius: 0.3em;
+    border-top-right-radius: 0.3em;
   }
 `
 
