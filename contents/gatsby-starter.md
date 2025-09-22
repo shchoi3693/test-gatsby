@@ -1,15 +1,15 @@
 ---
 date: '2025-09-17'
 title: 'Gatsby 시작하기'
-categories: ['Gatsby', 'EmotionJS']
-summary: 'Gatsby 개츠비 시작하기'
+categories: ['Gatsby', 'Markdown', 'GraphQL', 'TypeScript', 'EmotionJS']
+summary: 'Gatsby 환경 구성하기'
 thumbnail: './gatsby-starter.jpg'
 ---
 
 ## 특징
 
-> JAM Stack (Javascript, API, MarkUp Stack) 기반 프레임워크 - 빠르고 안전하고 스케일링 하기 쉬움  
-> React, GraphQL 기반 <u>정적 페이지 (Static Site Generator)</u> 생성
+> React, GraphQL 기반 <u>정적 페이지 (Static Site Generator)</u> 생성  
+> JAM Stack (Javascript, API, MarkUp Stack) 기반 프레임워크 - 빠르고 안전하고 스케일링 하기 쉬움
 
 - 서버와 통신, 동적 생성(Next.js)과 달리 서버 없이 정적 사이트 생성
 - 빌드 시 각 페이지에 대한 파일 생성
@@ -60,7 +60,11 @@ exports.onRenderBody = ({
 
 ## TypeScript
 
-> 타입 안전성을 위해 명시
+> MicroSoft에서 개발, 오픈 소스 프로그래밍 언어  
+> Javascript에 타입을 부여한 언어 (Javascript로 컴파일 되어 동작)
+
+- 컴파일 단계에서 에러를 알려주어 오류 방지
+- 변수와 함수의 타입을 알 수 있어 유지보수 용이
 
 ```
 yarn add typescript --dev gatsby-plugin-typescript
@@ -99,7 +103,7 @@ yarn tsc --init
       "hooks/*": ["./hooks/*"]
     },
     "strict": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "jsxImportSource": "@emotion/react",
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -161,20 +165,32 @@ const SomePage: FunctionComponent<SomeProps> = function(){
 export default SomePage
 ```
 
-`interface` 와 `type` 차이
-
-- `interface` 확장(extends) 가능 : 객체 중심(공개 API)
+### interface 와 type 차이
+- `interface`
+	- 객체 타입 정의 시(공개 API) 사용
+	- extends 확장 가능
 
 ```tsx
 interface SomeProps {
 	title: string
 }
-interface SomeProps {
+interface SomeProps {  // 선언적 확장도 가능
 	body: string
+}
+interface SomeProps2 extends SomeProps {
+	SomeBody: string
+}
+const MyContents: SomeProps2 = {
+	title: '...',
+	body: '...',
+	SomeBody: '...',
 }
 ```
 
-- `type` 병합 불가, & 연산자 사용 : 일반적으로 사용
+- `type`
+	- 병합 불가
+	- 확장 시 `&` 연산자 사용
+	- computed value 사용 가능
 
 ```tsx
 type SomeProps{
@@ -182,54 +198,11 @@ type SomeProps{
 } & {
 	body: string
 }
-```
 
-## GraphQL
-
-> 페이스북 쿼리언어  
-> 클라이언트가 요청한 데이터만 가져온다
-
-### GraphiQL (IDE)
-```
-View GraphiQL, an in-browser IDE, to explore your site's data and schema
-
-  http://localhost:8000/___graphql 
-```
-
-### Gatsby에서 사용하기
-
-- 홈페이지의 메타데이터, 마크다운 데이터, 이미지 데이터를 Query를 통해 얻을 수 있다.
-- pages/ 내부 파일과 Gatsby API 페이지 템플릿 파일에서만 Query 정의 가능하다.
-
-```tsx
-import { graphql } from 'gatsby'
-type SomeContentProps = {
-	data: {
-		some: string
-	}
+type SomeArray = {
+	[key in Somes]: string
 }
-const SomeContent: FunctionComponent<SomeContentProps> = function({
-	data: {
-		some
-	}
-}) {
-	return(
-		<div> {some} </div>
-	)
-}
-export default SomeContent
-
-export const someQuery = graphql`
-	{
-		some{}
-	}
-`
 ```
-> Query 변수 담기 > export > Gatsby 요청/응답 > Props(키 값 data)로 전달
-
-## Gatsby Link API
-- 경로를 to(props)로 전달
-- 페이지의 Link 모두 찾은 후 모든 페이지(to="경로") Prefetch > 로딩 속도 빠름
 
 ## EmotionJS
 
@@ -251,7 +224,6 @@ V5 설정
 ```json:title=tsconfig.json
 {
 	"compilerOptions": {
-		"jsx": "react-jsx",
 		"jsxImportSource": "@emotion/react",
 	}
 }
@@ -327,7 +299,20 @@ const Component = styled(({ active, ...props }: Props타입명시) =>(
 `
 ```
 
-## Markdown 라이브러리
+## Gatsby에서 [Markdown](/markdown-syntax) 파일 사용하기
+
+### Remark
+> Markdown을 처리하기 위한 자바스크립트 기반 파서
+
+- 변환된 추상 구문 트리(AST, Abstract syntax tree)를 이용하여 다른 플러그인으로 확장
+- 변환된 AST를 HTML로 변환하여 컴포넌트 출력
+
+> [Markdown] &rightarrow; Remark &rightarrow; AST(mdast) &rightarrow; AST 노드에 플러그인 접근(수정, 추가, 삭제)  
+> &rightarrow; [HTML], [GraphQL 스키마](#graphql)
+
+### Markdown 라이브러리
+- gatsby-source-filesystem  
+	: 변환할 파일 정보 제공 (다른 라이브러리와 연계(~-transformer, ~-images), GraphQL 연결)
 - gatsby-transformer-remark  
 	: HTML로 변환
 - gatsby-remark-images     
@@ -351,90 +336,90 @@ yarn add gatsby-transformer-remark gatsby-remark-images gatsby-remark-prismjs pr
 
 ```js:title=gatsby-config.js
 module.exports = {
-  ...
-  plugins: [
-    {
-      resolve: `gatsby-plugin-typescript`,
-      options: {
-        isTSX: true,
-        allExtensions: true,
-      },
-    },
-    `gatsby-plugin-emotion`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `contents`,
-        path: `${__dirname}/contents`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/static`,
-      },
-    },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-    {
-      resolve: `gatsby-omni-font-loader`,
-      options: {
-        enableListener: true,
-        preconnect: [`https://cdn.jsdelivr.net/gh/orioncactus/pretendard`],
-        web: [
-          {
-            name: `Pretendard`,
-            file: `https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css`,
-          },
-        ],
-      },
-    },
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        plugins: [
-          {
-            resolve: `gatsby-remark-smartypants`,
-            options: {
-              dashes: `oldschool`,
-            },
-          },
-          {
-            resolve: `gatsby-remark-autolink-headers`,
-            options: {
-              className: `link-headers`,
-              elements: [`h2`],
-            },
-          },
-          `gatsby-remark-code-titles`,
-          {
-            resolve: `gatsby-remark-prismjs`,
-            options: {
-              classPrefix: `language-`,
-            },
-          },
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 768,
-              quality: 100,
-              withWebp: true,
-            },
-          },
-          {
-            resolve: `gatsby-remark-copy-linked-files`,
-            options: {},
-          },
-          {
-            resolve: `gatsby-remark-external-links`,
-            options: { target: `_blank`, rel: `nofollow` },
-          },
-        ],
-      },
-    },
-  	...
-  ],
+	...
+	plugins: [
+		{
+			resolve: `gatsby-plugin-typescript`,
+			options: {
+				isTSX: true,
+				allExtensions: true,
+			},
+		},
+		`gatsby-plugin-emotion`,
+		{
+			resolve: `gatsby-source-filesystem`,
+			options: {
+				name: `contents`,
+				path: `${__dirname}/contents`,
+			},
+		},
+		{
+			resolve: `gatsby-source-filesystem`,
+			options: {
+				name: `images`,
+				path: `${__dirname}/static`,
+			},
+		},
+		`gatsby-transformer-sharp`,
+		`gatsby-plugin-sharp`,
+		{
+			resolve: `gatsby-omni-font-loader`,
+			options: {
+				enableListener: true,
+				preconnect: [`https://cdn.jsdelivr.net/gh/orioncactus/pretendard`],
+				web: [
+					{
+						name: `Pretendard`,
+						file: `https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard-dynamic-subset.min.css`,
+					},
+				],
+			},
+		},
+		{
+			resolve: `gatsby-transformer-remark`,
+			options: {
+				plugins: [
+					{
+						resolve: `gatsby-remark-smartypants`,
+						options: {
+							dashes: `oldschool`,
+						},
+					},
+					{
+						resolve: `gatsby-remark-autolink-headers`,
+						options: {
+							className: `link-headers`,
+							elements: [`h2`],
+						},
+					},
+					`gatsby-remark-code-titles`,
+					{
+						resolve: `gatsby-remark-prismjs`,
+						options: {
+							classPrefix: `language-`,
+						},
+					},
+					{
+						resolve: `gatsby-remark-images`,
+						options: {
+							maxWidth: 768,
+							quality: 100,
+							withWebp: true,
+						},
+					},
+					{
+						resolve: `gatsby-remark-copy-linked-files`,
+						options: {},
+					},
+					{
+						resolve: `gatsby-remark-external-links`,
+						options: { target: `_blank`, rel: `nofollow` },
+					},
+				],
+			},
+		},
+		...
+	],
 }
 ```
 
@@ -442,6 +427,114 @@ code 테마 적용
 ```js:title=gatsby-browser.js
 import 'prismjs/themes/prism-tomorrow.css';
 ```
+
+## GraphQL
+
+> 페이스북 쿼리언어  
+> 클라이언트가 요청한 데이터(필요한 데이터)만 가져온다
+
+### Gatsby에서 GraphQL 사용하기
+
+#### GraphiQL (IDE)
+```
+View GraphiQL, an in-browser IDE, to explore your site's data and schema
+
+	http://localhost:8000/___graphql 
+```
+
+- 홈페이지의 메타데이터, 마크다운 데이터, 이미지 데이터를 Query를 통해 얻을 수 있다.
+- 직접 생성한 페이지(src/pages/) 또는 Gatsby가 제공한 페이지(Node API `createPages`)에서 Query 정의 가능하다.
+
+> GraphQL 스키마(Query 정의) &rightarrow; export &rightarrow; Gatsby 요청/응답 &rightarrow; 데이터를 Props(키 값 data)로 전달
+
+- GraphQL 스키마 : (데이터 구성 방식: 데이터 사용 전 타입 정의)
+
+```tsx
+import { graphql } from 'gatsby'
+type SomeContentProps = {
+	data: {
+		someQuery:{
+			some: string
+		}
+	}
+}
+const SomeContent: FunctionComponent<SomeContentProps> = function({
+	data: {
+		someQuery: {
+			some
+		}
+	}
+}) {
+	return(
+		<div> {some} </div>
+	)
+}
+export default SomeContent
+
+export const someQuery = graphql`
+	query someQuery { // 디버깅 시 로그에서 쿼리 이름 확인 가능
+		{
+			some{}
+		}
+	}
+`
+```
+
+### Markdown 파일에서 GraphQL (gatsby-transformer-remark 라이브러리)
+- MarkdownRemark : 파일 1개
+- allMarkdownRemark : 파일 여러개
+- file : 이미지, 파일
+- edges : 연결 (배열)
+- node : 개별 실제 데이터
+- frontmatter : 상단 메타데이터
+
+```tsx
+import { graphql } from 'gatsby'
+type SomePageProps = {
+	data:{
+		allMarkdownRemark:{
+			edges: {node:{id...}}
+		}
+		file:{
+			childrenImagesharp: string
+		}
+	}
+}
+const SomePage: FunctionComponent<SomePageProps> = function({
+	data: {
+		allMarkdownRemark: {edges},
+		file:{
+			childrenImageSharp: {gatsbyImageData},
+		}
+	}
+}) {
+
+	return (<div />)
+}
+export default SomePage
+
+export const SomeQuery = graphql`
+	query SomeQuery {
+		allMarkdownRemark(sort){
+			edges{
+				node{
+					id
+					frontmatter{ title summary....}
+				}
+			}
+		}
+		file(name: {} ){
+			childImageSharp{
+				gatsbyImageData(width:..., height:,,,)
+			}
+		}
+	}
+`
+```
+
+## Gatsby Link API
+- 경로를 to(props)로 전달
+- 페이지의 Link 모두 찾은 후 모든 페이지(to="경로") Prefetch > 로딩 속도 빠름
 
 * * *
 - React 기반 Gatsby로 기술 블로그 개발하기

@@ -27,6 +27,9 @@ const PrevPageIcon = styled.div`
   font-size: 16px;
   cursor: pointer;
 `
+const PrevIcon = styled.div`
+  max-width: 40px;
+`
 const PrevPageTxt = styled.div`
   margin-left: 12px;
 `
@@ -62,7 +65,9 @@ const PostHeadInfo: FunctionComponent<PostHeadInfoProps> = ({
   return (
     <PostHeadInfoWrapper>
       <PrevPageIcon onClick={goBackPage}>
-        <FontAwesomeIcon icon={faArrowLeft} />
+        <PrevIcon>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </PrevIcon>
         <PrevPageTxt>All Posts</PrevPageTxt>
       </PrevPageIcon>
       <Title>{title}</Title>

@@ -21,9 +21,8 @@
       "hooks/*": ["./hooks/*"]
     },
     "strict": true,
-    //"jsx": "preserve",
-    "jsx": "react-jsx",
-    "jsxImportSource": "@emotion/react",
+    "jsx": "preserve",
+    //"jsxImportSource": "@emotion/react",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
