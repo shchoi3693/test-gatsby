@@ -266,13 +266,6 @@ exports<span class="token punctuation">.</span><span class="token function-varia
     <span class="token operator">...</span>
   <span class="token punctuation">]</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span></code></pre></div>
-<p>V5 설정</p>
-<div class="gatsby-code-title">tsconfig.json</div>
-<div class="gatsby-highlight" data-language="json"><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-	<span class="token property">"compilerOptions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-		<span class="token property">"jsxImportSource"</span><span class="token operator">:</span> <span class="token string">"@emotion/react"</span><span class="token punctuation">,</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre></div>
 <h3>Global 스타일 지정 방법</h3>
 <div class="gatsby-highlight" data-language="tsx"><pre class="language-tsx"><code class="language-tsx"><span class="token keyword">import</span> <span class="token punctuation">{</span> Global<span class="token punctuation">,</span> css <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@emotion/react'</span>
 <span class="token keyword">const</span> defaultStyle <span class="token operator">=</span> css<span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
@@ -333,8 +326,8 @@ exports<span class="token punctuation">.</span><span class="token function-varia
 <li>변환된 AST를 HTML로 변환하여 컴포넌트 출력</li>
 </ul>
 <blockquote>
-<p>[Markdown] → Remark → AST(mdast) → AST 노드에 플러그인 접근(수정, 추가, 삭제)<br>
-→ [HTML], <a href="#graphql">GraphQL 스키마</a></p>
+<p>[Markdown] → Remark → AST(mdast) → AST 노드에 플러그인 접근(수정, 추가, 삭제) →<br>
+<a href="#graphql">GraphQL 스키마</a> 생성, 매핑 → [HTML], React 컴포넌트</p>
 </blockquote>
 <h3>Markdown 라이브러리</h3>
 <ul>
@@ -459,17 +452,17 @@ exports<span class="token punctuation">.</span><span class="token function-varia
 
 	http://localhost:8000/___graphql </code></pre></div>
 <ul>
-<li>홈페이지의 메타데이터, 마크다운 데이터, 이미지 데이터를 Query를 통해 얻을 수 있다.</li>
+<li>홈페이지의 메타데이터, 마크다운 데이터, 이미지 데이터를 Query하여 얻을 수 있다.</li>
 <li>직접 생성한 페이지(src/pages/) 또는 Gatsby가 제공한 페이지(Node API <code class="language-text">createPages</code>)에서 Query 정의 가능하다.</li>
 </ul>
 <blockquote>
-<p>GraphQL 스키마(Query 정의) → export → Gatsby 요청/응답 → 데이터를 Props(키 값 data)로 전달</p>
+<p>GraphQL 스키마(Query 정의) → Query export(질의) → Gatsby 요청/응답 → 데이터를 Props(키 값 data)로 전달</p>
 </blockquote>
 <ul>
-<li>GraphQL 스키마 : (데이터 구성 방식: 데이터 사용 전 타입 정의)</li>
+<li>GraphQL 스키마 (데이터 구성 방식) : 데이터 사용 전 타입 정의</li>
 </ul>
 <div class="gatsby-highlight" data-language="tsx"><pre class="language-tsx"><code class="language-tsx"><span class="token keyword">import</span> <span class="token punctuation">{</span> graphql <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'gatsby'</span>
-<span class="token keyword">type</span> <span class="token class-name">SomeContentProps</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+<span class="token keyword">type</span> <span class="token class-name">SomeContentProps</span> <span class="token operator">=</span> <span class="token punctuation">{</span>  <span class="token comment">// GraphQL 스키마 정의</span>
 	data<span class="token operator">:</span> <span class="token punctuation">{</span>
 		someQuery<span class="token operator">:</span><span class="token punctuation">{</span>
 			some<span class="token operator">:</span> <span class="token builtin">string</span>
@@ -477,6 +470,7 @@ exports<span class="token punctuation">.</span><span class="token function-varia
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 <span class="token keyword">const</span> SomeContent<span class="token operator">:</span> FunctionComponent<span class="token operator">&lt;</span>SomeContentProps<span class="token operator">></span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+	<span class="token comment">// 데이터 (결과)</span>
 	data<span class="token operator">:</span> <span class="token punctuation">{</span>
 		someQuery<span class="token operator">:</span> <span class="token punctuation">{</span>
 			some
@@ -489,8 +483,8 @@ exports<span class="token punctuation">.</span><span class="token function-varia
 <span class="token punctuation">}</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> SomeContent
 
-<span class="token keyword">export</span> <span class="token keyword">const</span> someQuery <span class="token operator">=</span> graphql<span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">
-	query someQuery { // 디버깅 시 로그에서 쿼리 이름 확인 가능
+<span class="token keyword">export</span> <span class="token keyword">const</span> someQuery <span class="token operator">=</span> graphql<span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">  // Query export(질의)
+	query someQuery { // 디버깅 시 로그에서 쿼리 이름(someQuery) 확인 가능
 		{
 			some{}
 		}
@@ -561,6 +555,6 @@ exports<span class="token punctuation">.</span><span class="token function-varia
           <script
             id="gatsby-chunk-mapping"
           >
-            window.___chunkMapping="{\"app\":[\"/app-cf12885ebe7ecd1182e2.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-1b86e96a99906b7a9f67.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-3a961ab7dd966034dc31.js\"],\"component---src-templates-post-template-tsx\":[\"/component---src-templates-post-template-tsx-8055a0d5599c0d369899.js\"]}";
+            window.___chunkMapping="{\"app\":[\"/app-cf12885ebe7ecd1182e2.js\"],\"component---src-pages-404-tsx\":[\"/component---src-pages-404-tsx-1b86e96a99906b7a9f67.js\"],\"component---src-pages-index-tsx\":[\"/component---src-pages-index-tsx-363ffdaab5f70637b747.js\"],\"component---src-templates-post-template-tsx\":[\"/component---src-templates-post-template-tsx-8055a0d5599c0d369899.js\"]}";
           </script>
-        <script>window.___webpackCompilationHash="a165e656cc726c0167b8";</script><script src="/test-gatsby/webpack-runtime-2b3213225f9ba1cef295.js" async></script><script src="/test-gatsby/framework-a98cd6097609b685b73f.js" async></script><script src="/test-gatsby/app-cf12885ebe7ecd1182e2.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
+        <script>window.___webpackCompilationHash="cedd1dda81565b34bd06";</script><script src="/test-gatsby/webpack-runtime-4fe96991d20513279b7d.js" async></script><script src="/test-gatsby/framework-a98cd6097609b685b73f.js" async></script><script src="/test-gatsby/app-cf12885ebe7ecd1182e2.js" async></script><!-- slice-end id="_gatsby-scripts-1" --></body></html>
