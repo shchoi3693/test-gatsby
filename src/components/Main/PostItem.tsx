@@ -56,7 +56,6 @@ const CategoryItem = styled.div`
   border-radius: 3px;
   background-color: #555;
   font-size: 14px;
-  font-weight: 500;
   color: white;
 `
 const Summary = styled.div`

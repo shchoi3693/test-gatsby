@@ -157,9 +157,14 @@ thumbnail: './img1.jpg'
 function some (){}
 ```
 
-` ```bash `
-```bash
-$ npm run dev
+### 3. 타이틀
+````markdown
+```tsx:title=Title.tsx
+<Some />
+```
+````
+```tsx:title=Title.tsx
+<Some />
 ```
 
 ## 테이블

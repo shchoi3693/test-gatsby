@@ -220,14 +220,6 @@ module.exports = {
   ],
 }
 ```
-V5 설정
-```json:title=tsconfig.json
-{
-	"compilerOptions": {
-		"jsxImportSource": "@emotion/react",
-	}
-}
-```
 
 ### Global 스타일 지정 방법
 ```tsx
@@ -307,8 +299,8 @@ const Component = styled(({ active, ...props }: Props타입명시) =>(
 - 변환된 추상 구문 트리(AST, Abstract syntax tree)를 이용하여 다른 플러그인으로 확장
 - 변환된 AST를 HTML로 변환하여 컴포넌트 출력
 
-> [Markdown] &rightarrow; Remark &rightarrow; AST(mdast) &rightarrow; AST 노드에 플러그인 접근(수정, 추가, 삭제)  
-> &rightarrow; [HTML], [GraphQL 스키마](#graphql)
+> [Markdown] &rightarrow; Remark &rightarrow; AST(mdast) &rightarrow; AST 노드에 플러그인 접근(수정, 추가, 삭제) &rightarrow;  
+> [GraphQL 스키마](#graphql) 생성, 매핑 &rightarrow; [HTML], React 컴포넌트
 
 ### Markdown 라이브러리
 - gatsby-source-filesystem  
@@ -442,16 +434,16 @@ View GraphiQL, an in-browser IDE, to explore your site's data and schema
 	http://localhost:8000/___graphql 
 ```
 
-- 홈페이지의 메타데이터, 마크다운 데이터, 이미지 데이터를 Query를 통해 얻을 수 있다.
+- 홈페이지의 메타데이터, 마크다운 데이터, 이미지 데이터를 Query하여 얻을 수 있다.
 - 직접 생성한 페이지(src/pages/) 또는 Gatsby가 제공한 페이지(Node API `createPages`)에서 Query 정의 가능하다.
 
-> GraphQL 스키마(Query 정의) &rightarrow; export &rightarrow; Gatsby 요청/응답 &rightarrow; 데이터를 Props(키 값 data)로 전달
+> GraphQL 스키마(Query 정의) &rightarrow; Query export(질의) &rightarrow; Gatsby 요청/응답 &rightarrow; 데이터를 Props(키 값 data)로 전달
 
-- GraphQL 스키마 : (데이터 구성 방식: 데이터 사용 전 타입 정의)
+- GraphQL 스키마 (데이터 구성 방식) : 데이터 사용 전 타입 정의
 
 ```tsx
 import { graphql } from 'gatsby'
-type SomeContentProps = {
+type SomeContentProps = {  // GraphQL 스키마 정의
 	data: {
 		someQuery:{
 			some: string
@@ -459,6 +451,7 @@ type SomeContentProps = {
 	}
 }
 const SomeContent: FunctionComponent<SomeContentProps> = function({
+	// 데이터 (결과)
 	data: {
 		someQuery: {
 			some
@@ -471,8 +464,8 @@ const SomeContent: FunctionComponent<SomeContentProps> = function({
 }
 export default SomeContent
 
-export const someQuery = graphql`
-	query someQuery { // 디버깅 시 로그에서 쿼리 이름 확인 가능
+export const someQuery = graphql`  // Query export(질의)
+	query someQuery { // 디버깅 시 로그에서 쿼리 이름(someQuery) 확인 가능
 		{
 			some{}
 		}
