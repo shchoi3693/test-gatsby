@@ -84,7 +84,6 @@ const defaultStyle = css`
     margin: 0;
     padding: 0;
     border: 0;
-    font-size: 100%;
   }
   article,
   aside,
@@ -116,6 +115,24 @@ const defaultStyle = css`
   a {
     color: inherit;
     text-decoration: none;
+  }
+  button {
+    margin: 0;
+    padding: 0;
+    border: 1px solid #ddd;
+    box-shadow: none;
+    background-color: transparent;
+    appearance: none;
+    font-family: inherit;
+    font-size: 100%;
+    cursor: pointer;
+  }
+  input {
+    margin: 0;
+    box-sizing: border-box;
+    outline: none;
+    appearance: none;
+    font-family: inherit;
   }
 `
 

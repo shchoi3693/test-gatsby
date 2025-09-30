@@ -157,8 +157,8 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
 1. 마크다운 데이터의 모든 slug 조회 (graphql), 날짜 제목 내림차순(sort)
 2. 조회 한 slug의 데이터 생성(queryAllMarkdownData), 없을 시 에러 (reporter.panicOnBuild: 개발 시 서버 실행, 빌드 시 중단)
 3. 생성 한 데이터(queryAllMarkdownData)를 통해 페이지 생성  
-	`~~Data.forEach(({node:{ fields: { slug } }}) => ...createPage(pageOptions))` : `generatePage`
-4. 페이지의 옵션 (객체 형식 : pageOptions)
+	`queryAllMarkdownData.forEach(({node:{ fields: { slug } }}) => ...createPage(pageOptions))` : `generatePage`
+4. `createPage`의 옵션 (객체 형식)
 	- path - slug 데이터 그대로 사용(url)
 	- component - path 라이브러리를 통해 불러온 템플릿
 	- context: { slug } - 이 데이터(slug 객체)는 템플릿 컴포넌트(`src/templates/some_template.tsx`)에서 **Props**로 받을 수 있으며 **GraphQL Query 파라미터**로 받을 수 있다.

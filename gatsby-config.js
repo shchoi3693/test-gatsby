@@ -17,6 +17,35 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: `gatsby-plugin-fusejs`,
+      options: {
+        query: `
+					{
+						allMarkdownRemark {
+							nodes {
+								id
+								fields { slug }
+								rawMarkdownBody
+								frontmatter {
+									title
+									categories
+								}
+							}
+						}
+					}
+				`,
+        keys: ['title', 'body'],
+        normalizer: ({ data }) =>
+          data.allMarkdownRemark.nodes.map(node => ({
+            id: node.id,
+            slug: node.fields.slug,
+            title: node.frontmatter.title,
+            categories: node.frontmatter.categories,
+            body: node.rawMarkdownBody,
+          })),
+      },
+    },
+    {
       resolve: `gatsby-plugin-typescript`,
       options: {
         isTSX: true,

@@ -12,7 +12,7 @@ thumbnail: './gatsby-starter.jpg'
 > JAM Stack (Javascript, API, MarkUp Stack) 기반 프레임워크 - 빠르고 안전하고 스케일링 하기 쉬움
 
 - 서버와 통신, 동적 생성(Next.js)과 달리 서버 없이 정적 사이트 생성
-- 빌드 시 각 페이지에 대한 파일 생성
+- 빌드 시 각 페이지에 대한 파일 생성, 저장(CDN) 후 요청 시 재사용
 - CDN(Content Delivery Network) 통해 제공
 - 기업 소개 페이지, 블로그, 포트폴리오 작업에 적합
 - 다양한 [플러그인](https://www.gatsbyjs.com/plugins#cms) 사용하여 쉽게 제작 가능

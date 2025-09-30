@@ -1,8 +1,16 @@
-import React, { FunctionComponent, ReactNode } from 'react'
+import React, {
+  createContext,
+  Dispatch,
+  FunctionComponent,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from 'react'
 import styled from '@emotion/styled'
 import GlobalStyle from './GlobalStyle'
 import Footer from './Footer'
 import { Helmet } from 'react-helmet'
+import Search from './Search'
 
 type TemplateProps = {
   title: string
@@ -17,6 +25,38 @@ const Container = styled.main`
   flex-direction: column;
   height: 100%;
 `
+
+export interface FuseItem {
+  id: string
+  title: string
+  slug: string
+}
+
+export interface AppContextType {
+  fusejs: FuseItem[] | null
+  setFusejs: Dispatch<SetStateAction<FuseItem[] | null>>
+}
+
+export const AppContext = createContext<AppContextType>({
+  fusejs: null,
+  setFusejs: () => {},
+})
+
+type AppProviderProps = {
+  children: ReactNode
+}
+
+export const AppProvider: FunctionComponent<AppProviderProps> = ({
+  children,
+}) => {
+  const [fusejs, setFusejs] = useState<FuseItem[] | null>(null)
+
+  return (
+    <AppContext.Provider value={{ fusejs, setFusejs }}>
+      {children}
+    </AppContext.Provider>
+  )
+}
 
 const Template: FunctionComponent<TemplateProps> = ({
   title,
@@ -51,6 +91,7 @@ const Template: FunctionComponent<TemplateProps> = ({
       </Helmet>
 
       <GlobalStyle />
+      <Search />
       {children}
       <Footer />
     </Container>

@@ -23,6 +23,7 @@ const PrevPageIcon = styled.div`
   display: flex;
   align-items: center;
   height: 40px;
+  margin-right: auto;
   color: #fff;
   font-size: 16px;
   cursor: pointer;
